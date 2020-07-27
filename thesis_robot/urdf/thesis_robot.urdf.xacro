@@ -1,8 +1,7 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?> -->
 <?xml version="1.0"?>
 
 <robot name="thesis_robot" xmlns:xacro="http://ros.org/wiki/xacro">
-  
+
   <!-- <xacro:include filename="$(find thesis_robot)/urdf/thesis_robot.gazebo.xacro"/> -->
   <!-- <xacro:include filename="$(find thesis_robot)/urdf/materials.xacro" /> -->
 
@@ -17,7 +16,7 @@
       - Các khớp (join) có kiểu: type="continuous" cần được pub lên (sensor_msgs::JointState)
       - Các joint (khớp) kiểu continue sẽ có thêm 01 thông số quan tâm: Joint Axis
       - <axis> (optional: defaults to (1,0,0)) = xyz
-      Đây là trục quay cho khớp quay vòng tròn, trục dịch cho khớp hình lăng trụ và bề mặt bình thường cho khớp phẳng. 
+      Đây là trục quay cho khớp quay vòng tròn, trục dịch cho khớp hình lăng trụ và bề mặt bình thường cho khớp phẳng.
       Trục được chỉ định trong khung tham chiếu chung. Các khớp cố định (fix) và nổi (floating) không sử dụng trường trục.
       ##
       Những phần dưới này, chỉ liên quan đến Gazebo:
@@ -37,8 +36,16 @@
         #########
 
  -->
+  <!-- link gốc sẽ ko có joint  -->
+  <link name="base_footprint"/>
+  
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
 <!-- Base Link -->
-<!-- link gốc sẽ ko có joint  -->
 <!-- Vì ko đặt riêng link = "base_footprint" nên mọi mô tả (geometry) đều được tính từ tâm [0,0,0] theo cả 3 chiều nên khi tính độ cao phải chia /2 -->
   <link name="base_link">
     <visual>
@@ -65,7 +72,7 @@
     <visual name="caster">
       <origin xyz="0.095 0 0.0625" rpy="1.570796 0 0" />
       <geometry>
-          <cylinder length="0.04" radius="0.0625" />  
+          <cylinder length="0.04" radius="0.0625" />
       </geometry>
       <material name="black">
         <color rgba="0.05 0.05 0.05 1"/>
@@ -85,7 +92,7 @@
 
      <!-- Tam phia tren cung -->
     <visual name="base_level2">
-      <origin xyz="0 0 0.325" rpy="0 0 0" />
+      <origin xyz="0 0 0.325" rpy="0 0 0" /> <!--125+200=325cm-->
       <geometry>
           <box size="0.3757 0.280 0.003"/> <!-- Tấm Nhôm AL = 3mm -->
       </geometry>
@@ -101,7 +108,7 @@
           <box size="0.02 0.02 0.3"/>
       </geometry>
       <material name="yellow">
-        <color rgba="1 1 0.75 1"/>  
+        <color rgba="1 1 0.75 1"/>
       </material>
     </visual>
 
@@ -111,7 +118,7 @@
           <box size="0.02 0.02 0.3"/>
       </geometry>
       <material name="yellow">
-        <color rgba="1 1 0.75 1"/>  
+        <color rgba="1 1 0.75 1"/>
       </material>
     </visual>
 
@@ -121,7 +128,7 @@
           <box size="0.02 0.02 0.3"/>
       </geometry>
       <material name="yellow">
-        <color rgba="1 1 0.75 1"/>  
+        <color rgba="1 1 0.75 1"/>
       </material>
       </visual>
 
@@ -131,7 +138,7 @@
           <box size="0.02 0.02 0.3"/>
       </geometry>
       <material name="yellow">
-        <color rgba="1 1 0.75 1"/>  
+        <color rgba="1 1 0.75 1"/>
       </material>
     </visual>
 
@@ -142,45 +149,51 @@
           <box size="0.11 0.07 0.025"/>
       </geometry>
       <material name="yellow">
-        <color rgba="1 1 0.75 1"/>  
+        <color rgba="1 1 0.75 1"/>
       </material>
     </visual>
   </link>
 
   <!-- Left Wheel: wheel_left_joint && wheel_left_link -->
   <link name="wheel_left_link">
-    <visual>     
-      <origin xyz="0 0 0" rpy="1.570796 0 0" /> 
+    <visual>
+      <origin xyz="0 0 0" rpy="1.570796 0 0" />
       <geometry>
           <cylinder length="0.04" radius="0.0625" />
       </geometry>
       <material name="black"/>
     </visual>
-    
+
     <collision>
       <origin xyz="0 0 0" rpy="1.570796 0 0" />
       <geometry>
-        <cylinder length="0.04" radius="0.0625" /> 
+        <cylinder length="0.04" radius="0.0625" />
       </geometry>
     </collision>
-    
+
+    <inertial>
+			<mass value="0.1"/>
+			<origin xyz="0 0 0"/>
+			<inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983"
+				 iyy="0.015218160428" iyz="-0.000004273467" izz="0.011763977943"/>
+  	</inertial>
   </link>
 
   <!-- Các khớp (join) có kiểu: type="continuous" cần được pub lên (sensor_msgs::JointState) -->
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
-    <origin xyz="-0.12535 0.16 0.0625" rpy="0 0 0" /> 
+    <origin xyz="-0.12535 0.165 0.0625" rpy="0 0 0" /> <!--0.16+0.005-->
     <axis xyz="0 1 0" />
   </joint>
-  
+
     <!-- Right Wheel : wheel_right_joint && wheel_right_link-->
   <link name="wheel_right_link">
     <visual>
       <origin xyz="0 0 0" rpy="1.570796 0 0" />
       <geometry>
-          <cylinder length="0.04" radius="0.0625" /> 
-      </geometry>  
+          <cylinder length="0.04" radius="0.0625" />
+      </geometry>
       <material name="black">
         <color rgba="0.05 0.05 0.05 1"/>
       </material>
@@ -189,16 +202,24 @@
     <collision>
       <origin xyz="0 0 0" rpy="1.570796 0 0" />
       <geometry>
-        <cylinder length="0.04" radius="0.0625" /> 
+        <cylinder length="0.04" radius="0.0625" />
       </geometry>
     </collision>
+
+    <inertial>
+			<mass value="0.1"/>
+			<origin xyz="0 0 0"/>
+			<inertia ixx="0.012411765597" ixy="-0.000711733678" ixz="0.00050272983"
+				 iyy="0.015218160428" iyz="-0.000004273467" izz="0.011763977943"/>
+  	</inertial>
+
   </link>
 
   <!-- Các khớp (join) có kiểu: type="continuous" cần được pub lên (sensor_msgs::JointState) -->
   <joint name="wheel_right_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_right_link"/>
-    <origin xyz="-0.12535 -0.16 0.0625" rpy="0 0 0" /> 
+    <origin xyz="-0.12535 -0.165 0.0625" rpy="0 0 0" />
     <axis xyz="0 1 0" />
   </joint>
 
@@ -207,7 +228,7 @@
     <parent link="base_link"/>
     <child link="imu_link"/>
     <!-- cho imu == odom -->
-    <origin xyz="0 0 0.0365" rpy="0 0 0" /> 
+    <origin xyz="0 0 0.0365" rpy="0 0 0" />
   </joint>
 
   <link name="imu_link"/>

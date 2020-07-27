@@ -22,7 +22,7 @@
   </material>
 
   <material name="brown">
-    <color rgba="${222/255} ${207/255} ${195/255} 1.0"/>
+    <color rgba="0.87 0.82 0.76 1.0"/>
   </material>
 
   <material name="red">
