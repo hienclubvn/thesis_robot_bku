@@ -1,5 +1,5 @@
 <launch>
-
+  <!-- thay command = textfile, de tranh Error: OSError: [Errno 13] Permission denied -->
   <param name="robot_description" textfile="$(find thesis_robot)/urdf/thesis_robot.urdf.xacro" />
 
   <node pkg="thesis_robot_fake" type="thesis_robot_fake_node" name="thesis_robot_fake_node" output="screen" />

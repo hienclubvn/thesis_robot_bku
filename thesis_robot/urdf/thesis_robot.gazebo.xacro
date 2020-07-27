@@ -1,16 +1,11 @@
 <?xml version="1.0"?>
-
-<robot name="thesis_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="thesis_robot_sim" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:arg name="laser_visual" default="false"/>
   <xacro:arg name="imu_visual"   default="false"/>
 
   <gazebo reference="base_link">
     <material>Gazebo/Blue</material>
   </gazebo>
-
-  <!-- <gazebo reference="left_wheel">
-    <material>Gazebo/Blue</material>
-  </gazebo> -->
 
   <gazebo reference="wheel_left_link">
     <mu1>0.1</mu1>
@@ -23,9 +18,6 @@
     <material>Gazebo/Black</material>
   </gazebo>
 
-  <!-- <gazebo reference="right_wheel">
-    <material>Gazebo/Blue</material>
-  </gazebo> -->
   <gazebo reference="wheel_right_link">
     <mu1>0.1</mu1>
     <mu2>0.1</mu2>
@@ -45,15 +37,14 @@
     <material>Gazebo/FlatBlack</material>
   </gazebo>
 
-  <!-- Plugin : Dieu khien Robot loai: differential_drive_controller -->
-  <gazebo>
-    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+   <gazebo>
+    <plugin name="thesis_drive_controller" filename="libgazebo_ros_diff_drive.so">
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <odometrySource>world</odometrySource>
       <publishOdomTF>true</publishOdomTF>
-      <robotBaseFrame>base_link</robotBaseFrame>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
       <publishWheelTF>false</publishWheelTF>
       <publishTf>true</publishTf>
       <publishWheelJointState>true</publishWheelJointState>
@@ -69,8 +60,7 @@
     </plugin>
   </gazebo>
 
-  <!-- Plugin: IMU -->
-  <!-- <gazebo>
+  <gazebo>
     <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
       <bodyName>imu_link</bodyName>
@@ -98,9 +88,9 @@
       </imu>
     </plugin>
   </gazebo>
-   -->
+
   <!-- Plugin: Lidar -->
-  <!-- <gazebo reference="base_scan">
+  <gazebo reference="base_scan">
     <material>Gazebo/FlatBlack</material>
     <sensor type="ray" name="lds_lfcd_sensor">
       <pose>0 0 0 0 0 0</pose>
@@ -131,6 +121,6 @@
         <frameName>base_scan</frameName>
       </plugin>
     </sensor>
-  </gazebo> -->
+  </gazebo>
 
 </robot>
