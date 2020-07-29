@@ -37,9 +37,9 @@ ThesisRobotFake::~ThesisRobotFake()
 bool ThesisRobotFake::init()
 {
   // initialize ROS parameter
-  wheel_seperation_ = 0.160;
-  turning_radius_ = 0.080;
-  robot_radius_ = 0.105;
+  wheel_seperation_ = D2WHEEL;  //Khoan cach giua 2 banh xe
+  // turning_radius_ = 0.080;
+  // robot_radius_ = 0.105;
 
   //  Chú ý các joint_states_name, phải trùng với bên mô tả trong file:
   //  /home/hiennd/catkin_ws/src/turtlebot3/turtlebot3_description/urdf/turtlebot3_burger.urdf.xacro
@@ -55,7 +55,7 @@ bool ThesisRobotFake::init()
   wheel_speed_cmd_[RIGHT] = 0.0;
   goal_linear_velocity_   = 0.0;
   goal_angular_velocity_  = 0.0;
-  cmd_vel_timeout_        = 1.0;
+  cmd_vel_timeout_        = 2.0;
   last_position_[LEFT]    = 0.0;
   last_position_[RIGHT]   = 0.0;
   last_velocity_[LEFT]    = 0.0;
@@ -89,7 +89,7 @@ bool ThesisRobotFake::init()
   odom_pub_         = nh_.advertise<nav_msgs::Odometry>("odom", 100);
 
   // initialize subscribers
-  cmd_vel_sub_  = nh_.subscribe("cmd_vel", 100,  &ThesisRobotFake::commandVelocityCallback, this);
+  cmd_vel_sub_  = nh_.subscribe("cmd_vel", 200,  &ThesisRobotFake::commandVelocityCallback, this);
 
   prev_update_time_ = ros::Time::now();
 
@@ -244,7 +244,7 @@ int main(int argc, char* argv[])
   ros::init(argc, argv, "thesis_robot_fake_node");
   ThesisRobotFake robotfake;
 
-  ros::Rate loop_rate(30);
+  ros::Rate loop_rate(100); //100Hz
 
   while (ros::ok())
   {

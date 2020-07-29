@@ -33,18 +33,18 @@
 #include <nav_msgs/Odometry.h>
 
 
-#define WHEEL_RADIUS                    0.033     // meter
-
+#define WHEEL_RADIUS                    0.0625     // meter
+#define D2WHEEL                         0.370     //meter
 #define LEFT                            0
 #define RIGHT                           1
 
-#define MAX_LINEAR_VELOCITY             0.22   // m/s
-#define MAX_ANGULAR_VELOCITY            2.84   // rad/s
-#define VELOCITY_STEP                   0.01   // m/s
-#define VELOCITY_LINEAR_X               0.01   // m/s
-#define VELOCITY_ANGULAR_Z              0.1    // rad/s
-#define SCALE_VELOCITY_LINEAR_X         1
-#define SCALE_VELOCITY_ANGULAR_Z        1
+//#define MAX_LINEAR_VELOCITY             0.22   // m/s
+//#define MAX_ANGULAR_VELOCITY            2.84   // rad/s
+// #define VELOCITY_STEP                   0.01   // m/s
+// #define VELOCITY_LINEAR_X               0.01   // m/s
+// #define VELOCITY_ANGULAR_Z              0.1    // rad/s
+// #define SCALE_VELOCITY_LINEAR_X         1
+// #define SCALE_VELOCITY_ANGULAR_Z        1
 
 #define DEG2RAD(x)                      (x * 0.01745329252)  // *PI/180
 #define RAD2DEG(x)                      (x * 57.2957795131)  // *180/PI
