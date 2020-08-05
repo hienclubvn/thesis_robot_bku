@@ -10,8 +10,16 @@
 #ATTRS{idVendor}=="10c4" ATTRS{idProduct}=="ea60", ENV{ID_MM_DEVICE_IGNORE}="1", MODE:="0666"
 
 #USB2COM CH340-MCU
-ATTRS{idVendor}=="1a86" ATTRS{idProduct}=="7523", MODE:="0666"
+#ATTRS{idVendor}=="1a86" ATTRS{idProduct}=="7523", MODE:="0666"
 #ref: https://www.silabs.com/community/interface/knowledge-base.entry.html/2016/06/06/fixed_tty_deviceass-XzTf
 #SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ATTRS{serial}=="00492F60", SYMLINK+="ttySLAB0"
+
+# kiem tra = :$ lsusb
+#ID 1a86:7523 QinHeng Electronics HL-340 USB-Serial adapter                                #MCU - Ch340
+#ID 10c4:ea60 Cygnal Integrated Products, Inc. CP210x UART Bridge / myAVR mySmartUSB light #board roi ben ngoai === Lidar
+#ID 10c4:ea60 Cygnal Integrated Products, Inc. CP210x UART Bridge / myAVR mySmartUSB light # Lidar :  ATTRS{serial}=="0001"
+#ID 1366:0105 SEGGER == UWB #ttyACM0, ttyACM1 == UWB.
+# Kiem tra ATTRS{serial} =: $ udevadm info -a -n /dev/ttyUSB* | grep '{serial}' | head -n1
 SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="ttyUSB_MCU"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="ttyUSB_Lidar"
 
